@@ -1,0 +1,41 @@
+version: "3.2"
+services:
+  keycloak_postgres:
+    image: postgres:11.5-alpine
+    container_name: ${COMPOSE_PROJECT_NAME}_keycloak_postgres
+    environment:
+      - POSTGRES_DB=keycloak_postgres
+      - POSTGRES_USER=keycloak
+      - POSTGRES_PASSWORD=keycloak_password
+#    volumes:
+#      - keycloak_vol_db_postgres:/var/lib/postgresql/data
+    restart: always
+  keycloak:
+    image: jboss/keycloak:15.0.1
+    container_name: ${COMPOSE_PROJECT_NAME}_keycloak
+    volumes:
+      - ./keycloak/demo.json:/tmp/demo.json
+    environment:
+      - DB_VENDOR=postgres
+      - DB_ADDR=keycloak_postgres
+      - DB_DATABASE=keycloak_postgres
+      - PROXY_ADDRESS_FORWARDING=true
+      - DB_USER=keycloak
+      - DB_PASSWORD=keycloak_password
+      - KEYCLOAK_USER=admin
+      - KEYCLOAK_PASSWORD=password
+      - KEYCLOAK_IMPORT=/tmp/demo.json
+    ports:
+      - 15005:8080
+    depends_on:
+      - keycloak_postgres
+    restart: always
+  jupyter:
+    container_name: ${COMPOSE_PROJECT_NAME}_jupyter
+    build:
+      context: ./jupyter
+      dockerfile: Dockerfile
+    ports:
+      - 15006:8888
+    volumes:
+      - ./notebooks:/notebooks
