@@ -25,6 +25,7 @@ services:
       - KEYCLOAK_USER=admin
       - KEYCLOAK_PASSWORD=password
       - KEYCLOAK_IMPORT=/tmp/demo.json
+      - KEYCLOAK_LOGLEVEL=DEBUG
     ports:
       - 15005:8080
     depends_on:
