@@ -1,7 +1,5 @@
 import json
 
-PWD="**********"
-
 def json_pretty_print(str):
     try:
         data = json.loads(str)

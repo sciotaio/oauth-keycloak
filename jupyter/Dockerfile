@@ -5,7 +5,7 @@ RUN \
     DEBIAN_FRONTEND=noninteractive apt-get install python3 python3-pip curl jq -y
 
 RUN \
-    pip3 install jupyterlab pymysql pandas matplotlib seaborn python-keycloak pyjwt requests pyjwkest
+    pip3 install jupyterlab pymysql pandas matplotlib seaborn python-keycloak pyjwt requests pyjwkest cryptography
 
 RUN mkdir /notebooks
 

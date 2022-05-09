@@ -1,5 +1,11 @@
 version: "3.2"
 services:
+  opendj:
+    build:
+      context: opendj
+      dockerfile: Dockerfile
+    container_name: ${COMPOSE_PROJECT_NAME}_opendj
+    restart: always
   keycloak_postgres:
     image: postgres:11.5-alpine
     container_name: ${COMPOSE_PROJECT_NAME}_keycloak_postgres
@@ -40,3 +46,23 @@ services:
       - 15006:8888
     volumes:
       - ./notebooks:/notebooks
+      - ./certs:/certs
+  phppgadmin:
+    container_name: ${COMPOSE_PROJECT_NAME}_phppgadmin
+    image: bitnami/phppgadmin:latest
+    ports:
+      - 15007:8080
+    links:
+      - postgres:postgres
+    environment:
+      DATABASE_HOST: postgres
+  phpldapadmin:
+    container_name: ${COMPOSE_PROJECT_NAME}_phpldapadmin
+    image: osixia/phpldapadmin:latest
+    environment:
+      PHPLDAPADMIN_HTTPS: "false"
+      PHPLDAPADMIN_LDAP_HOSTS: "#PYTHON2BASH:[{'opendj': [{'server': [{'tls': False}, {'port': 1389}]}, {'login': [{'bind_id': 'cn=Directory Manager'}]}]}]"
+    ports:
+      - 15008:80
+    links:
+      - opendj:opendj

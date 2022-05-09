@@ -1,0 +1,44 @@
+version: 1
+
+dn: ou=demo,dc=sciota,dc=io
+objectClass: organizationalunit
+objectClass: top
+ou: Groups
+
+dn: ou=Groups,ou=demo,dc=sciota,dc=io
+objectClass: organizationalUnit
+objectClass: top
+ou: hive
+
+dn: cn=admin,ou=Groups,ou=demo,dc=sciota,dc=io
+objectClass: groupOfNames
+objectClass: top
+cn: admin
+member: uid=falk.hartmann@sciota.io,ou=People,ou=demo,dc=sciota,dc=io
+
+dn: cn=supporter,ou=Groups,ou=demo,dc=sciota,dc=io
+objectClass: groupOfNames
+objectClass: top
+cn: supporter
+member: cn=empty-membership-placeholder
+member: uid=falk.hartmann@sciota.io,ou=People,ou=demo,dc=sciota,dc=io
+
+dn: ou=People,ou=demo,dc=sciota,dc=io
+objectClass: organizationalUnit
+objectClass: top
+ou: hive
+
+dn: uid=falk.hartmann@sciota.io,ou=People,ou=demo,dc=sciota,dc=io
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+objectClass: top
+cn: Falk
+sn: Hartmann
+uid: falk.hartmann@sciota.io
+userPassword: FalkHartmann
+
+dn: ou=Devices,ou=demo,dc=sciota,dc=io
+objectClass: organizationalUnit
+objectClass: top
+ou: Devices
